@@ -42,7 +42,7 @@ class BoardTest(unittest.TestCase):
     def test_place(self):
         self.board.place("C")
         self.assertEqual(self.board[-1], Stone("C"))
-        self.board.place("D", position="left")
+        self.board.place("D", pos="left")
         self.assertEqual(self.board[0], Stone("D"))
 
     def test_peek(self):
@@ -51,4 +51,9 @@ class BoardTest(unittest.TestCase):
         sys.stdout = captured_output  # reindirizza stdout al buffer
         self.board.peek(1)
         sys.stdout = sys.__stdout__ # ripristina stdout
-        self.assertEqual(captured_output.getvalue().strip(), "A") 
+        self.assertEqual(captured_output.getvalue().strip(), "A")
+
+    def test_swap(self):
+        self.board.swap(1, 2)
+        self.assertEqual(self.board[0], Stone("B"))
+        self.assertEqual(self.board[1], Stone("A"))
