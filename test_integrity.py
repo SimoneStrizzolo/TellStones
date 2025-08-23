@@ -1,6 +1,7 @@
 import unittest
+from unittest.mock import patch
 import io, sys
-from TellStones import Stone, Reserve, Board, TellStones
+from TellStones import *
 
 class StoneTest(unittest.TestCase):
     def setUp(self):
@@ -57,3 +58,13 @@ class BoardTest(unittest.TestCase):
         self.board.swap(1, 2)
         self.assertEqual(self.board[0], Stone("B"))
         self.assertEqual(self.board[1], Stone("A"))
+
+class GameTest(unittest.TestCase):
+    def setUp(self):
+        self.board = Board(Stone("A", hidden=True), "B", "C")
+
+    @patch('builtins.input', side_effect=['A', 'B'])
+    def test_challenge(self, mock_input):
+        self.assertTrue(challenge(self.board, 1))
+        self.assertFalse(challenge(self.board, 1))
+
