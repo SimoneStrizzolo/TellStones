@@ -67,5 +67,8 @@ def challenge(brd:Board, pos:int):
     else:
         print("Wrong!")
         return False
+    
+def boast(brd:Board):
+    print("I know where all the stones are!")
 
 
