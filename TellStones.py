@@ -104,7 +104,7 @@ class Board(list):
         super().__init__(map(to_stone, args) if args else map(to_stone, range(length)))
 
     def peek(self, *args):
-        return (self[i-1].name for i in args) if args else (s.name for s in self)
+        print(*(self[i-1].name for i in args)) if args else print(*(s.name for s in self))
 
     def place(self, stone, position="right"):
         self.append(to_stone(stone)) if position == "right" else self.insert(0, to_stone(stone))

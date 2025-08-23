@@ -1,4 +1,5 @@
 import unittest
+import io, sys
 from TellStones import Stone, Reserve, Board, TellStones
 
 class StoneTest(unittest.TestCase):
@@ -17,11 +18,10 @@ class StoneTest(unittest.TestCase):
         self.assertNotEqual(self.stone_a_hidden, self.stone_a_not_hidden)
 
     def test_flip(self):
-        stone = Stone("C", hidden=False)
-        stone.flip()
-        self.assertTrue(stone.hidden)
-        stone.flip()
-        self.assertFalse(stone.hidden)
+        self.stone_a_not_hidden.flip()
+        self.assertTrue(self.stone_a_not_hidden.hidden)
+        self.stone_a_not_hidden.flip()
+        self.assertFalse(self.stone_a_not_hidden.hidden)
     
     def test_repr(self):
         self.assertEqual(repr(self.stone_a_not_hidden), "A")
@@ -47,5 +47,8 @@ class BoardTest(unittest.TestCase):
 
     def test_peek(self):
         self.board[0].flip()
-        print(self.board.peek())
-        #self.assertEqual(repr(self.board.peek(1)), "A")
+        captured_output = io.StringIO() # crea un buffer per catturare l'output
+        sys.stdout = captured_output  # reindirizza stdout al buffer
+        self.board.peek(1)
+        sys.stdout = sys.__stdout__ # ripristina stdout
+        self.assertEqual(captured_output.getvalue().strip(), "A") 
